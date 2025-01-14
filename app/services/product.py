@@ -71,6 +71,9 @@ class ProductService:
                     price=result.extracted_price or "",
                 )
             )
+            if not product_dict:
+                continue
+            manufacture = self.repository.get_manufacture_by_name(manufacture_name)
             self.repository.add_product(
                 name=scraped_data.title or result.title,
                 description=product_dict.get("description"),

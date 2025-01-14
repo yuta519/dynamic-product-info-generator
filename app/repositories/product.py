@@ -1,5 +1,6 @@
 from uuid import UUID
 
+from sqlalchemy.orm import joinedload
 from sqlalchemy.orm import selectinload
 from sqlmodel import Session, select
 
@@ -28,7 +29,7 @@ class ProductRepository:
     def search_products_by_name(self, search_term: str):
         statement = (
             select(Product)
-            .options(selectinload(Product.manufacture))
+            .options(joinedload(Product.manufacture))
             .where(Product.name.contains(search_term))
         )
         return self.session.exec(statement).all()
